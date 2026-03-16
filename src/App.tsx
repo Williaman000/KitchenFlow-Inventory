@@ -68,9 +68,11 @@ const App: FC = () => {
 					<h1 className={styles.headerTitle}>{t('app.title')}</h1>
 				</div>
 				<div className={styles.headerRight}>
-					<button className={styles.langBtn} onClick={toggleLang}>
-						{LANG_LABELS[i18n.language] ?? '한국어'}
-					</button>
+					{!import.meta.env.VITE_FIXED_LANG && (
+						<button className={styles.langBtn} onClick={toggleLang}>
+							{LANG_LABELS[i18n.language] ?? '한국어'}
+						</button>
+					)}
 					{auth.user && (
 						<span className={styles.userName}>{auth.user.name}</span>
 					)}

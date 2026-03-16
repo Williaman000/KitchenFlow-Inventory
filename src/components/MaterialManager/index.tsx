@@ -1,10 +1,10 @@
 import { useState, useEffect, type FC, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { trMaterial, trMaterialCategory, trUnit } from '../utils/dbTranslate';
-import { COLORS } from '../constants/theme';
-import type { Material, BulkImportResult } from '../types';
-import type { CreateMaterialPayload, AdjustInventoryPayload, BulkMaterialItem } from '../services/inventoryApi';
-import BulkImportModal from './BulkImportModal';
+import { trMaterial, trMaterialCategory, trUnit } from '../../utils/dbTranslate';
+import { COLORS } from '../../constants/theme';
+import type { Material, BulkImportResult } from '../../types';
+import type { CreateMaterialPayload, AdjustInventoryPayload, BulkMaterialItem } from '../../services/inventoryApi';
+import BulkImportModal from '../BulkImportModal';
 import styles from './MaterialManager.module.scss';
 
 interface Props {

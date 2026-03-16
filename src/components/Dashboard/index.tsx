@@ -1,7 +1,7 @@
 import { useEffect, type FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { COLORS } from '../constants/theme';
-import type { DashboardStats } from '../hooks/useDashboard';
+import { COLORS } from '../../constants/theme';
+import type { DashboardStats } from '../../hooks/useDashboard';
 import styles from './Dashboard.module.scss';
 
 interface Props {

@@ -1,9 +1,9 @@
 import { useState, useEffect, type FC, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { COLORS } from '../constants/theme';
-import type { Material, PurchaseOrder, PurchaseOrderStatus } from '../types';
-import type { CreatePurchaseOrderPayload } from '../services/inventoryApi';
-import { formatCurrency } from '../utils/format';
+import { COLORS } from '../../constants/theme';
+import type { Material, PurchaseOrder, PurchaseOrderStatus } from '../../types';
+import type { CreatePurchaseOrderPayload } from '../../services/inventoryApi';
+import { formatCurrency } from '../../utils/format';
 import styles from './PurchaseOrderManager.module.scss';
 
 interface Props {

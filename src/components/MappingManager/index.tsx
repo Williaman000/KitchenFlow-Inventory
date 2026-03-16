@@ -1,8 +1,8 @@
 import { useState, useEffect, type FC, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { trProduct, trMaterial } from '../utils/dbTranslate';
-import type { Material, ProductMaterialMapping } from '../types';
-import type { SimpleProduct } from '../services/inventoryApi';
+import { trProduct, trMaterial } from '../../utils/dbTranslate';
+import type { Material, ProductMaterialMapping } from '../../types';
+import type { SimpleProduct } from '../../services/inventoryApi';
 import styles from './MappingManager.module.scss';
 
 interface Props {

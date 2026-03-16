@@ -1,10 +1,10 @@
 import { useState, type FC } from 'react';
 import { useTranslation, getI18n } from 'react-i18next';
-import { trMaterial, trUnit } from '../utils/dbTranslate';
-import { COLORS } from '../constants/theme';
-import type { ForecastData, RecommendedOrder } from '../types';
-import { explainForecast } from '../services/inventoryAiApi';
-import type { CreatePurchaseOrderPayload } from '../services/inventoryApi';
+import { trMaterial, trUnit } from '../../utils/dbTranslate';
+import { COLORS } from '../../constants/theme';
+import type { ForecastData, RecommendedOrder } from '../../types';
+import { explainForecast } from '../../services/inventoryAiApi';
+import type { CreatePurchaseOrderPayload } from '../../services/inventoryApi';
 import styles from './ForecastPage.module.scss';
 
 interface Props {

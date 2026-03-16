@@ -2,9 +2,9 @@ import { useState, useRef, useCallback, type FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import Papa from 'papaparse';
 import * as XLSX from 'xlsx';
-import { COLORS } from '../constants/theme';
-import type { BulkImportResult } from '../types';
-import type { BulkMaterialItem } from '../services/inventoryApi';
+import { COLORS } from '../../constants/theme';
+import type { BulkImportResult } from '../../types';
+import type { BulkMaterialItem } from '../../services/inventoryApi';
 import styles from './BulkImportModal.module.scss';
 
 interface Props {

@@ -2,9 +2,9 @@ import { useState, useRef, useCallback, type FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import Papa from 'papaparse';
 import * as XLSX from 'xlsx';
-import { COLORS } from '../constants/theme';
-import type { SalesUploadResult } from '../types';
-import { uploadSalesData, type SalesUploadItemPayload } from '../services/inventoryAiApi';
+import { COLORS } from '../../constants/theme';
+import type { SalesUploadResult } from '../../types';
+import { uploadSalesData, type SalesUploadItemPayload } from '../../services/inventoryAiApi';
 import styles from './SalesUploadModal.module.scss';
 
 interface Props {

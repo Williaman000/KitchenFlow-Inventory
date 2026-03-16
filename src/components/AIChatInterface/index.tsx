@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect, type FC, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
-import { COLORS } from '../constants/theme';
-import type { ChatMessage } from '../types';
+import { COLORS } from '../../constants/theme';
+import type { ChatMessage } from '../../types';
 import styles from './AIChatInterface.module.scss';
 
 interface Props {

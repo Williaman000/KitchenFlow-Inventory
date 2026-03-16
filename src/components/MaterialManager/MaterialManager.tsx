@@ -4,7 +4,7 @@ import { trMaterial, trMaterialCategory, trUnit } from '../../utils/dbTranslate'
 import { COLORS } from '../../constants/theme';
 import type { Material, BulkImportResult } from '../../types';
 import type { CreateMaterialPayload, AdjustInventoryPayload, BulkMaterialItem } from '../../services/inventoryApi';
-import BulkImportModal from '../BulkImportModal';
+import BulkImportModal from '../BulkImportModal/BulkImportModal';
 import styles from './MaterialManager.module.scss';
 
 interface Props {

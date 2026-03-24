@@ -52,6 +52,11 @@ interface RecommendedOrderDto {
 	recommended_order: number;
 	confidence: string;
 	breakdown: Record<string, unknown>;
+	lead_time_days: number;
+	order_deadline_hour: number;
+	delivery_day_of_week: number | null;
+	is_order_urgent: boolean;
+	order_deadline_display: string;
 }
 
 interface ForecastDto {
@@ -143,6 +148,11 @@ export async function fetchForecast(forecastDays?: number): Promise<ForecastData
 			recommendedOrder: r.recommended_order,
 			confidence: r.confidence,
 			breakdown: r.breakdown,
+			leadTimeDays: r.lead_time_days,
+			orderDeadlineHour: r.order_deadline_hour,
+			deliveryDayOfWeek: r.delivery_day_of_week,
+			isOrderUrgent: r.is_order_urgent,
+			orderDeadlineDisplay: r.order_deadline_display,
 		})),
 		totalMaterials: dto.total_materials,
 		needsOrdering: dto.needs_ordering,

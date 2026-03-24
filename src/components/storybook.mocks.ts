@@ -90,6 +90,11 @@ export const inventoryForecast: ForecastData = {
 			recommendedOrder: 7,
 			confidence: 'high',
 			breakdown: { recentOrders: 42 },
+			leadTimeDays: 2,
+			orderDeadlineHour: 2,
+			deliveryDayOfWeek: 1,
+			isOrderUrgent: true,
+			orderDeadlineDisplay: '내일 02:00까지 발주',
 		},
 	],
 };

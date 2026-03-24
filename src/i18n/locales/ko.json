@@ -212,10 +212,21 @@
 		"colRecommended": "추천발주량",
 		"colConfidence": "신뢰도",
 		"colDetail": "상세",
+		"colDeadline": "발주마감",
+		"urgent": "긴급",
+		"deliveryDay": "{{day}} 입고",
+		"leadTime": "리드타임 {{days}}일",
 		"btnWhy": "왜?",
 		"btnCollapse": "접기",
 		"explainError": "설명을 가져오는데 실패했습니다.",
-		"poNotes": "AI 발주 추천 ({{days}}일 예측)"
+		"poNotes": "AI 발주 추천 ({{days}}일 예측)",
+		"dayMon": "월요일",
+		"dayTue": "화요일",
+		"dayWed": "수요일",
+		"dayThu": "목요일",
+		"dayFri": "금요일",
+		"daySat": "토요일",
+		"daySun": "일요일"
 	},
 	"bulkImport": {
 		"titleUpload": "CSV / 엑셀 일괄 등록",

@@ -212,10 +212,21 @@
 		"colRecommended": "推薦発注量",
 		"colConfidence": "信頼度",
 		"colDetail": "詳細",
+		"colDeadline": "発注締切",
+		"urgent": "緊急",
+		"deliveryDay": "{{day}}入荷",
+		"leadTime": "リードタイム{{days}}日",
 		"btnWhy": "なぜ？",
 		"btnCollapse": "閉じる",
 		"explainError": "説明の取得に失敗しました。",
-		"poNotes": "AI発注推薦 ({{days}}日予測)"
+		"poNotes": "AI発注推薦 ({{days}}日予測)",
+		"dayMon": "月曜日",
+		"dayTue": "火曜日",
+		"dayWed": "水曜日",
+		"dayThu": "木曜日",
+		"dayFri": "金曜日",
+		"daySat": "土曜日",
+		"daySun": "日曜日"
 	},
 	"bulkImport": {
 		"titleUpload": "CSV / エクセル 一括登録",

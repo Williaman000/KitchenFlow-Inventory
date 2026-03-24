@@ -16,6 +16,51 @@ interface Props {
 	onCreatePO: (payload: CreatePurchaseOrderPayload) => Promise<void>;
 }
 
+// Day-of-week index (0=Mon ... 6=Sun) to i18n key mapping
+const DAY_KEYS = ['dayMon', 'dayTue', 'dayWed', 'dayThu', 'dayFri', 'daySat', 'daySun'] as const;
+
+function UrgentBadge() {
+	const { t } = useTranslation();
+	return (
+		<span style={{
+			display: 'inline-block',
+			padding: '2px 8px',
+			borderRadius: 10,
+			fontSize: 11,
+			fontWeight: 700,
+			backgroundColor: '#FFEBEE',
+			color: '#D32F2F',
+			marginLeft: 6,
+		}}>
+			{t('forecast.urgent')}
+		</span>
+	);
+}
+
+function DeadlineCell({ rec }: { rec: RecommendedOrder }) {
+	const { t } = useTranslation();
+	const dayLabel = rec.deliveryDayOfWeek != null
+		? t(`forecast.${DAY_KEYS[rec.deliveryDayOfWeek]}`)
+		: null;
+
+	return (
+		<div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+			<span style={{
+				fontWeight: 600,
+				color: rec.isOrderUrgent ? '#D32F2F' : '#222',
+				fontSize: 13,
+			}}>
+				{rec.orderDeadlineDisplay}
+			</span>
+			{dayLabel && (
+				<span style={{ fontSize: 11, color: '#999' }}>
+					{t('forecast.deliveryDay', { day: dayLabel })}
+				</span>
+			)}
+		</div>
+	);
+}
+
 function ConfidenceBadge({ confidence }: { confidence: string }) {
 	const { t } = useTranslation();
 	const colorMap: Record<string, { bg: string; fg: string }> = {
@@ -199,6 +244,7 @@ const ForecastPage: FC<Props> = ({ forecast, forecastDays, isLoading, error, onL
 								<th className={styles.th} style={{ textAlign: 'center' }}>{t('forecast.colSafety')}</th>
 								<th className={styles.th} style={{ textAlign: 'center' }}>{t('forecast.colRecommended')}</th>
 								<th className={styles.th} style={{ textAlign: 'center' }}>{t('forecast.colConfidence')}</th>
+								<th className={styles.th} style={{ textAlign: 'center' }}>{t('forecast.colDeadline')}</th>
 								<th className={styles.th} style={{ textAlign: 'center', width: 60 }}>{t('forecast.colDetail')}</th>
 							</tr>
 						</thead>
@@ -207,10 +253,15 @@ const ForecastPage: FC<Props> = ({ forecast, forecastDays, isLoading, error, onL
 								const isNeedsOrder = rec.recommendedOrder > 0;
 								return (
 									<>
-										<tr key={rec.materialId} className={isNeedsOrder ? styles.needsOrderRow : undefined}>
+										<tr
+											key={rec.materialId}
+											className={isNeedsOrder ? styles.needsOrderRow : undefined}
+											style={rec.isOrderUrgent ? { borderLeft: '4px solid #D32F2F' } : undefined}
+										>
 											<td className={styles.td}>
 												<span style={{ fontWeight: 600 }}>{trMaterial(rec.materialName)}</span>
 												<span className={styles.materialUnit}>({trUnit(rec.unit)})</span>
+												{rec.isOrderUrgent && <UrgentBadge />}
 											</td>
 											<td className={styles.td} style={{ textAlign: 'center', fontWeight: 600 }}>
 												{rec.currentStock}
@@ -231,6 +282,9 @@ const ForecastPage: FC<Props> = ({ forecast, forecastDays, isLoading, error, onL
 											</td>
 											<td className={styles.td} style={{ textAlign: 'center' }}>
 												<ConfidenceBadge confidence={rec.confidence} />
+											</td>
+											<td className={styles.td} style={{ textAlign: 'center' }}>
+												<DeadlineCell rec={rec} />
 											</td>
 											<td className={styles.td} style={{ textAlign: 'center' }}>
 												<button className={styles.detailBtn} onClick={() => setDetailRec(rec)}>

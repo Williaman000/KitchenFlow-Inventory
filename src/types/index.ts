@@ -104,6 +104,11 @@ export interface RecommendedOrder {
 	recommendedOrder: number;
 	confidence: string;
 	breakdown: Record<string, unknown>;
+	leadTimeDays: number;
+	orderDeadlineHour: number;
+	deliveryDayOfWeek: number | null;
+	isOrderUrgent: boolean;
+	orderDeadlineDisplay: string;
 }
 
 export interface ForecastData {

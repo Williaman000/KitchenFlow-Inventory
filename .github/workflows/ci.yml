@@ -32,7 +32,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          VITE_API_BASE_URL: https://d2uaemjj634gr7.cloudfront.net
+          VITE_API_BASE_URL: https://api.kitchenflow.jp
           VITE_FIXED_LANG: ko
 
       - name: Upload build artifact

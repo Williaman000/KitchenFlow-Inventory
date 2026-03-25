@@ -163,6 +163,8 @@
 		"emptySubtitle": "매출, 재고, 발주에 대해 자연어로 질문할 수 있습니다.",
 		"inputPlaceholder": "질문을 입력하세요...",
 		"send": "전송",
+		"attachFile": "파일 첨부",
+		"fileMessagePlaceholder": "파일에 대한 메시지 입력 (선택)",
 		"error": "AI 응답을 가져오는데 실패했습니다.",
 		"suggestion1": "지난 주 양념치킨 얼마나 팔렸어?",
 		"suggestion2": "재고 부족한 재료 뭐야?",

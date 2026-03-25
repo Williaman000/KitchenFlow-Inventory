@@ -163,6 +163,8 @@
 		"emptySubtitle": "売上、在庫、発注について自然言語で質問できます。",
 		"inputPlaceholder": "質問を入力してください...",
 		"send": "送信",
+		"attachFile": "ファイル添付",
+		"fileMessagePlaceholder": "ファイルへのメッセージ入力（任意）",
 		"error": "AI応答の取得に失敗しました。",
 		"suggestion1": "先週ヤンニョムチキンはどのくらい売れた？",
 		"suggestion2": "在庫不足の材料は？",

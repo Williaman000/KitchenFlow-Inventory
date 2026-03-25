@@ -9,6 +9,7 @@ const meta = {
 		messages: inventoryChatMessages,
 		isLoading: false,
 		onSendMessage: () => {},
+		onSendFile: () => {},
 		onClear: () => {},
 	},
 } satisfies Meta<typeof AIChatInterface>;

@@ -1,14 +1,17 @@
-import { useState, useRef, useEffect, type FC, type FormEvent } from 'react';
+import { useState, useRef, useEffect, type FC, type FormEvent, type ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
 import { COLORS } from '../../constants/theme';
 import type { ChatMessage } from '../../types';
 import styles from './AIChatInterface.module.scss';
 
+const ACCEPTED_FILES = '.jpg,.jpeg,.png,.webp,.xlsx,.pdf,.docx';
+
 interface Props {
 	messages: ChatMessage[];
 	isLoading: boolean;
 	onSendMessage: (text: string) => void;
+	onSendFile?: (file: File, message: string) => void;
 	onClear: () => void;
 }
 
@@ -67,7 +70,7 @@ function DataRenderer({ data, dataType }: { data: Record<string, unknown>; dataT
 	);
 }
 
-const AIChatInterface: FC<Props> = ({ messages, isLoading, onSendMessage, onClear }) => {
+const AIChatInterface: FC<Props> = ({ messages, isLoading, onSendMessage, onSendFile, onClear }) => {
 	const { t } = useTranslation();
 	const SUGGESTIONS = [
 		t('chat.suggestion1'),
@@ -78,6 +81,8 @@ const AIChatInterface: FC<Props> = ({ messages, isLoading, onSendMessage, onClea
 	];
 
 	const [input, setInput] = useState('');
+	const [pendingFile, setPendingFile] = useState<File | null>(null);
+	const fileInputRef = useRef<HTMLInputElement>(null);
 	const messagesEndRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -87,9 +92,30 @@ const AIChatInterface: FC<Props> = ({ messages, isLoading, onSendMessage, onClea
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
 		const text = input.trim();
-		if (!text || isLoading) return;
+		if (isLoading) return;
+
+		if (pendingFile) {
+			onSendFile?.(pendingFile, text);
+			setPendingFile(null);
+			setInput('');
+			if (fileInputRef.current) fileInputRef.current.value = '';
+			return;
+		}
+
+		if (!text) return;
 		onSendMessage(text);
 		setInput('');
+	};
+
+	const handleFileSelect = (e: ChangeEvent<HTMLInputElement>) => {
+		const file = e.target.files?.[0];
+		if (!file) return;
+		setPendingFile(file);
+	};
+
+	const handleCancelFile = () => {
+		setPendingFile(null);
+		if (fileInputRef.current) fileInputRef.current.value = '';
 	};
 
 	const handleSuggestionClick = (suggestion: string) => {
@@ -158,19 +184,44 @@ const AIChatInterface: FC<Props> = ({ messages, isLoading, onSendMessage, onClea
 			</div>
 
 			{/* Input bar */}
+			{pendingFile && (
+				<div className={styles.fileBadge}>
+					<span className={styles.fileBadgeIcon}>📎</span>
+					<span className={styles.fileBadgeName}>{pendingFile.name}</span>
+					<button className={styles.fileBadgeRemove} onClick={handleCancelFile}>✕</button>
+				</div>
+			)}
 			<form className={styles.inputBar} onSubmit={handleSubmit}>
+				<input
+					ref={fileInputRef}
+					type="file"
+					accept={ACCEPTED_FILES}
+					onChange={handleFileSelect}
+					style={{ display: 'none' }}
+				/>
+				{onSendFile && (
+					<button
+						type="button"
+						className={styles.attachBtn}
+						onClick={() => fileInputRef.current?.click()}
+						disabled={isLoading}
+						title={t('chat.attachFile')}
+					>
+						📎
+					</button>
+				)}
 				<input
 					className={styles.input}
 					value={input}
 					onChange={(e) => setInput(e.target.value)}
-					placeholder={t('chat.inputPlaceholder')}
+					placeholder={pendingFile ? t('chat.fileMessagePlaceholder') : t('chat.inputPlaceholder')}
 					disabled={isLoading}
 				/>
 				<button
 					type="submit"
 					className={styles.sendBtn}
-					style={{ opacity: input.trim() && !isLoading ? 1 : 0.5 }}
-					disabled={!input.trim() || isLoading}
+					style={{ opacity: (input.trim() || pendingFile) && !isLoading ? 1 : 0.5 }}
+					disabled={(!input.trim() && !pendingFile) || isLoading}
 				>
 					{t('chat.send')}
 				</button>

@@ -1,5 +1,5 @@
 import type { SalesTrendData, ForecastData, InsightData, ProductMaterialMapping, SalesUploadRecord, SalesUploadResult } from '../types';
-import { request } from './api';
+import { API_BASE_URL, getApiToken, request } from './api';
 
 // ── Backend DTOs (snake_case) ──
 
@@ -96,6 +96,30 @@ export async function sendChat(message: string, language: string = 'ko'): Promis
 		data: dto.data,
 		dataType: dto.data_type,
 	};
+}
+
+export async function sendChatWithFile(
+	file: File,
+	message: string,
+	language: string = 'ko',
+): Promise<{ answer: string; data: Record<string, unknown> | null; dataType: string | null }> {
+	const token = getApiToken();
+	const formData = new FormData();
+	formData.append('file', file);
+	formData.append('message', message);
+	formData.append('language', language);
+
+	const response = await fetch(`${API_BASE_URL}/api/v1/inventory-ai/chat-with-file`, {
+		method: 'POST',
+		headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+		body: formData,
+	});
+	if (!response.ok) {
+		throw new Error(`Upload failed: ${response.status}`);
+	}
+	const json = await response.json();
+	const dto = json.data as ChatResponseDto;
+	return { answer: dto.answer, data: dto.data, dataType: dto.data_type };
 }
 
 // ── Sales Trends ──

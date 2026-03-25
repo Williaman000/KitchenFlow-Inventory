@@ -111,6 +111,7 @@ const App: FC = () => {
 						messages={chatHook.messages}
 						isLoading={chatHook.isLoading}
 						onSendMessage={chatHook.sendMessage}
+						onSendFile={chatHook.sendFile}
 						onClear={chatHook.clearMessages}
 					/>
 				)}

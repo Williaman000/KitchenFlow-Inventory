@@ -15,6 +15,7 @@ import ForecastPage from './components/ForecastPage/ForecastPage';
 import MaterialManager from './components/MaterialManager/MaterialManager';
 import PurchaseOrderManager from './components/PurchaseOrderManager/PurchaseOrderManager';
 import MappingManager from './components/MappingManager/MappingManager';
+import ScrollButtons from './components/ScrollButtons/ScrollButtons';
 import styles from './App.module.scss';
 
 type AppTab = 'dashboard' | 'chat' | 'trends' | 'forecast' | 'materials' | 'orders' | 'mappings';
@@ -192,6 +193,8 @@ const App: FC = () => {
 					/>
 				)}
 			</div>
+
+			<ScrollButtons />
 		</div>
 	);
 };

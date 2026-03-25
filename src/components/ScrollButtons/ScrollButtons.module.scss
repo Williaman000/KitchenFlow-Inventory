@@ -8,20 +8,39 @@
 	z-index: 900;
 }
 
-.btn {
-	width: 40px;
-	height: 40px;
+.btnTop, .btnBottom {
+	width: 30px;
+	height: 30px;
 	border-radius: 50%;
 	border: none;
-	background-color: rgba(0, 0, 0, 0.5);
 	color: #fff;
-	font-size: 16px;
+	font-size: 12px;
 	cursor: pointer;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	transition: background-color 0.2s;
+	transition: background-color 0.2s, transform 0.15s;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+
+	&:hover {
+		transform: scale(1.1);
+	}
+
+	&:active {
+		transform: scale(0.95);
+	}
+}
+
+.btnTop {
+	background-color: rgba(21, 101, 192, 0.7);
+
+	&:hover {
+		background-color: rgba(21, 101, 192, 0.9);
+	}
+}
+
+.btnBottom {
+	background-color: rgba(0, 0, 0, 0.5);
 
 	&:hover {
 		background-color: rgba(0, 0, 0, 0.7);

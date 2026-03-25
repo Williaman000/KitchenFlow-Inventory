@@ -103,7 +103,7 @@ const App: FC = () => {
 			</nav>
 
 			{/* Main content */}
-			<div className={activeTab === 'chat' ? styles.chatContent : styles.mainContent}>
+			<div id="main-scroll" className={activeTab === 'chat' ? styles.chatContent : styles.mainContent}>
 				{activeTab === 'dashboard' && (
 					<Dashboard
 						stats={dashboardHook.stats}

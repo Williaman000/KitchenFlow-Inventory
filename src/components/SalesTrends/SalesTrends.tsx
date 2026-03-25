@@ -12,6 +12,7 @@ import type { SalesTrendData, SalesUploadRecord } from '../../types';
 import type { TrendPeriod } from '../../hooks/useSalesTrends';
 import SalesUploadModal from '../SalesUploadModal/SalesUploadModal';
 import { downloadExcelMultiSheet } from '../../utils/exportExcel';
+import { useTableSort } from '../../hooks/useTableSort';
 import styles from './SalesTrends.module.scss';
 
 function downloadCsv(filename: string, csvContent: string) {
@@ -40,6 +41,7 @@ interface Props {
 const SalesTrends: FC<Props> = ({ data, period, isLoading, error, onPeriodChange, onRefresh, uploads, uploadsLoading, onDeleteUpload }) => {
 	const { t } = useTranslation();
 	const [showUpload, setShowUpload] = useState(false);
+	const { sorted: sortedUploads, toggleSort, getSortIcon } = useTableSort(uploads);
 
 	const translatedProductRanking = useMemo(() =>
 		data?.productRanking.map((p) => ({ ...p, productName: trProduct(p.productName) })) ?? []
@@ -254,15 +256,15 @@ const SalesTrends: FC<Props> = ({ data, period, isLoading, error, onPeriodChange
 						<thead>
 							<tr>
 								<th className={styles.historyTh}>#</th>
-								<th className={styles.historyTh}>{t('salesUpload.colDate')}</th>
-								<th className={styles.historyTh}>{t('trends.fileName')}</th>
-								<th className={styles.historyTh}>{t('trends.totalRows')}</th>
-								<th className={styles.historyTh}>{t('trends.importedRows')}</th>
+								<th className={styles.historyTh} onClick={() => toggleSort('createdAt')} style={{ cursor: 'pointer' }}>{t('salesUpload.colDate')}{getSortIcon('createdAt')}</th>
+								<th className={styles.historyTh} onClick={() => toggleSort('fileName')} style={{ cursor: 'pointer' }}>{t('trends.fileName')}{getSortIcon('fileName')}</th>
+								<th className={styles.historyTh} onClick={() => toggleSort('totalRows')} style={{ cursor: 'pointer' }}>{t('trends.totalRows')}{getSortIcon('totalRows')}</th>
+								<th className={styles.historyTh} onClick={() => toggleSort('importedRows')} style={{ cursor: 'pointer' }}>{t('trends.importedRows')}{getSortIcon('importedRows')}</th>
 								<th className={styles.historyTh}></th>
 							</tr>
 						</thead>
 						<tbody>
-							{uploads.map((u, i) => (
+							{sortedUploads.map((u, i) => (
 								<tr key={u.id} className={i % 2 === 0 ? styles.historyRowEven : undefined}>
 									<td className={styles.historyTd}>{i + 1}</td>
 									<td className={styles.historyTd}>{new Date(u.createdAt).toLocaleDateString()}</td>

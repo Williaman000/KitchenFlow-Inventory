@@ -5,6 +5,7 @@ import type { Material, PurchaseOrder, PurchaseOrderStatus } from '../../types';
 import type { CreatePurchaseOrderPayload } from '../../services/inventoryApi';
 import { formatCurrency } from '../../utils/format';
 import { downloadExcel } from '../../utils/exportExcel';
+import { useTableSort } from '../../hooks/useTableSort';
 import styles from './PurchaseOrderManager.module.scss';
 
 interface Props {
@@ -119,8 +120,10 @@ const PurchaseOrderManager: FC<Props> = ({
 		}
 	};
 
+	const { sorted: sortedPOs, toggleSort, getSortIcon } = useTableSort(purchaseOrders);
+
 	// Apply date filter
-	const filteredPOs = purchaseOrders.filter((po) => {
+	const filteredPOs = sortedPOs.filter((po) => {
 		const poDate = po.orderedAt || po.createdAt;
 		if (!poDate) return true;
 		const d = poDate.slice(0, 10);
@@ -285,13 +288,13 @@ const PurchaseOrderManager: FC<Props> = ({
 				<table className={styles.table}>
 					<thead>
 						<tr>
-							<th className={styles.th}>{t('orders.colNumber')}</th>
-							<th className={styles.th}>{t('orders.colStatus')}</th>
-							<th className={styles.th} style={{ textAlign: 'center' }}>{t('orders.colItemCount')}</th>
-							<th className={styles.th} style={{ textAlign: 'right' }}>{t('orders.colTotal')}</th>
-							<th className={styles.th}>{t('orders.colOrderDate')}</th>
-							<th className={styles.th}>{t('orders.colReceivedDate')}</th>
-							<th className={styles.th}>{t('orders.colNotes')}</th>
+							<th className={styles.th} onClick={() => toggleSort('id')} style={{ cursor: 'pointer' }}>{t('orders.colNumber')}{getSortIcon('id')}</th>
+							<th className={styles.th} onClick={() => toggleSort('status')} style={{ cursor: 'pointer' }}>{t('orders.colStatus')}{getSortIcon('status')}</th>
+							<th className={styles.th} onClick={() => toggleSort('itemCount')} style={{ textAlign: 'center', cursor: 'pointer' }}>{t('orders.colItemCount')}{getSortIcon('itemCount')}</th>
+							<th className={styles.th} onClick={() => toggleSort('totalAmount')} style={{ textAlign: 'right', cursor: 'pointer' }}>{t('orders.colTotal')}{getSortIcon('totalAmount')}</th>
+							<th className={styles.th} onClick={() => toggleSort('orderedAt')} style={{ cursor: 'pointer' }}>{t('orders.colOrderDate')}{getSortIcon('orderedAt')}</th>
+							<th className={styles.th} onClick={() => toggleSort('receivedAt')} style={{ cursor: 'pointer' }}>{t('orders.colReceivedDate')}{getSortIcon('receivedAt')}</th>
+							<th className={styles.th} onClick={() => toggleSort('notes')} style={{ cursor: 'pointer' }}>{t('orders.colNotes')}{getSortIcon('notes')}</th>
 							<th className={styles.th} style={{ textAlign: 'center', width: 160 }}>{t('orders.colActions')}</th>
 						</tr>
 					</thead>

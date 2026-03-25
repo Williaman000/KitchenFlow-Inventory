@@ -6,6 +6,7 @@ import type { Material, BulkImportResult } from '../../types';
 import type { CreateMaterialPayload, AdjustInventoryPayload, BulkMaterialItem } from '../../services/inventoryApi';
 import BulkImportModal from '../BulkImportModal/BulkImportModal';
 import { downloadExcel } from '../../utils/exportExcel';
+import { useTableSort } from '../../hooks/useTableSort';
 import styles from './MaterialManager.module.scss';
 
 interface Props {
@@ -57,6 +58,8 @@ const MaterialManager: FC<Props> = ({
 	const [adjustQty, setAdjustQty] = useState('');
 	const [adjustType, setAdjustType] = useState<'USE_OUT' | 'WASTE'>('USE_OUT');
 	const [adjustNotes, setAdjustNotes] = useState('');
+
+	const { sorted, toggleSort, getSortIcon } = useTableSort(materials);
 
 	useEffect(() => {
 		onLoad();
@@ -226,23 +229,23 @@ const MaterialManager: FC<Props> = ({
 				<table className={styles.table}>
 					<thead>
 						<tr>
-							<th className={styles.th}>{t('materials.colName')}</th>
-							<th className={styles.th}>{t('materials.colCategory')}</th>
-							<th className={styles.th} style={{ textAlign: 'center' }}>{t('materials.colCurrentStock')}</th>
-							<th className={styles.th} style={{ textAlign: 'center' }}>{t('materials.colMinStock')}</th>
+							<th className={styles.th} onClick={() => toggleSort('name')} style={{ cursor: 'pointer' }}>{t('materials.colName')}{getSortIcon('name')}</th>
+							<th className={styles.th} onClick={() => toggleSort('category')} style={{ cursor: 'pointer' }}>{t('materials.colCategory')}{getSortIcon('category')}</th>
+							<th className={styles.th} onClick={() => toggleSort('currentStock')} style={{ textAlign: 'center', cursor: 'pointer' }}>{t('materials.colCurrentStock')}{getSortIcon('currentStock')}</th>
+							<th className={styles.th} onClick={() => toggleSort('minimumStock')} style={{ textAlign: 'center', cursor: 'pointer' }}>{t('materials.colMinStock')}{getSortIcon('minimumStock')}</th>
 							<th className={styles.th} style={{ textAlign: 'center', width: 100 }}>{t('materials.colStatus')}</th>
 							<th className={styles.th} style={{ textAlign: 'center', width: 200 }}>{t('materials.colActions')}</th>
 						</tr>
 					</thead>
 					<tbody>
-						{materials.length === 0 ? (
+						{sorted.length === 0 ? (
 							<tr>
 								<td colSpan={6} className={styles.emptyCell}>
 									{t('materials.empty')}
 								</td>
 							</tr>
 						) : (
-							materials.map((mat) => {
+							sorted.map((mat) => {
 								const isLow = mat.currentStock <= mat.minimumStock;
 								return (
 									<tr key={mat.id} style={isLow ? { backgroundColor: '#FFF5F5' } : undefined}>

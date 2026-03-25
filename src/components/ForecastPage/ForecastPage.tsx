@@ -5,6 +5,7 @@ import { COLORS } from '../../constants/theme';
 import type { ForecastData, RecommendedOrder } from '../../types';
 import { explainForecast } from '../../services/inventoryAiApi';
 import type { CreatePurchaseOrderPayload } from '../../services/inventoryApi';
+import { useTableSort } from '../../hooks/useTableSort';
 import styles from './ForecastPage.module.scss';
 
 interface Props {
@@ -152,6 +153,7 @@ const ForecastPage: FC<Props> = ({ forecast, forecastDays, isLoading, error, onL
 	const { t } = useTranslation();
 	const [creating, setCreating] = useState(false);
 	const [detailRec, setDetailRec] = useState<RecommendedOrder | null>(null);
+	const { sorted: sortedRecommendations, toggleSort, getSortIcon } = useTableSort(forecast?.recommendations ?? []);
 
 	const handleCreateAllPO = async () => {
 		if (!forecast) return;
@@ -238,18 +240,18 @@ const ForecastPage: FC<Props> = ({ forecast, forecastDays, isLoading, error, onL
 					<table className={styles.table}>
 						<thead>
 							<tr>
-								<th className={styles.th}>{t('forecast.colName')}</th>
-								<th className={styles.th} style={{ textAlign: 'center' }}>{t('forecast.colCurrentStock')}</th>
-								<th className={styles.th} style={{ textAlign: 'center' }}>{t('forecast.colExpected')}</th>
-								<th className={styles.th} style={{ textAlign: 'center' }}>{t('forecast.colSafety')}</th>
-								<th className={styles.th} style={{ textAlign: 'center' }}>{t('forecast.colRecommended')}</th>
-								<th className={styles.th} style={{ textAlign: 'center' }}>{t('forecast.colConfidence')}</th>
+								<th className={styles.th} onClick={() => toggleSort('materialName')} style={{ cursor: 'pointer' }}>{t('forecast.colName')}{getSortIcon('materialName')}</th>
+								<th className={styles.th} onClick={() => toggleSort('currentStock')} style={{ textAlign: 'center', cursor: 'pointer' }}>{t('forecast.colCurrentStock')}{getSortIcon('currentStock')}</th>
+								<th className={styles.th} onClick={() => toggleSort('expectedConsumption')} style={{ textAlign: 'center', cursor: 'pointer' }}>{t('forecast.colExpected')}{getSortIcon('expectedConsumption')}</th>
+								<th className={styles.th} onClick={() => toggleSort('safetyStock')} style={{ textAlign: 'center', cursor: 'pointer' }}>{t('forecast.colSafety')}{getSortIcon('safetyStock')}</th>
+								<th className={styles.th} onClick={() => toggleSort('recommendedOrder')} style={{ textAlign: 'center', cursor: 'pointer' }}>{t('forecast.colRecommended')}{getSortIcon('recommendedOrder')}</th>
+								<th className={styles.th} onClick={() => toggleSort('confidence')} style={{ textAlign: 'center', cursor: 'pointer' }}>{t('forecast.colConfidence')}{getSortIcon('confidence')}</th>
 								<th className={styles.th} style={{ textAlign: 'center' }}>{t('forecast.colDeadline')}</th>
 								<th className={styles.th} style={{ textAlign: 'center', width: 60 }}>{t('forecast.colDetail')}</th>
 							</tr>
 						</thead>
 						<tbody>
-							{forecast.recommendations.map((rec) => {
+							{sortedRecommendations.map((rec) => {
 								const isNeedsOrder = rec.recommendedOrder > 0;
 								return (
 									<>

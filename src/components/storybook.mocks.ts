@@ -130,10 +130,11 @@ export const inventoryTrendData: SalesTrendData = {
 	totalRevenue: 6850000,
 	totalQuantity: 312,
 	totalOrders: 240,
+	totalChickenCount: 94.0,
 	dailyBreakdown: [
-		{ date: '03-10', totalQuantity: 38, totalRevenue: 920000, orderCount: 31 },
-		{ date: '03-11', totalQuantity: 41, totalRevenue: 980000, orderCount: 34 },
-		{ date: '03-12', totalQuantity: 45, totalRevenue: 1100000, orderCount: 37 },
+		{ date: '03-10', totalQuantity: 38, totalRevenue: 920000, orderCount: 31, chickenCount: 28.5 },
+		{ date: '03-11', totalQuantity: 41, totalRevenue: 980000, orderCount: 34, chickenCount: 31.0 },
+		{ date: '03-12', totalQuantity: 45, totalRevenue: 1100000, orderCount: 37, chickenCount: 34.5 },
 	],
 	productRanking: [
 		{ productId: 100, productName: '양념치킨', totalQuantity: 84, totalRevenue: 1848000 },

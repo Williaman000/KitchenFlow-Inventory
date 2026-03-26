@@ -9,6 +9,8 @@ export interface Material {
 	category: string;
 	currentStock: number;
 	minimumStock: number;
+	unitPrice: number;
+	expiryDate: string | null;
 	leadTimeDays: number;
 	orderDeadlineHour: number;
 	deliveryDayOfWeek: number | null;
@@ -95,6 +97,67 @@ export interface SalesTrendData {
 	dailyBreakdown: DailySalesPoint[];
 	productRanking: ProductSalesItem[];
 	dayOfWeekPattern: DayOfWeekPoint[];
+}
+
+// Cost analysis
+export interface MaterialCostDetail {
+	name: string;
+	unit: string;
+	qty: number;
+	unitPrice: number;
+	cost: number;
+}
+
+export interface ProductCostItem {
+	productId: number;
+	productName: string;
+	price: number;
+	materialCost: number;
+	margin: number;
+	marginRate: number;
+	materials: MaterialCostDetail[];
+}
+
+export interface CostAnalysisData {
+	products: ProductCostItem[];
+	avgMarginRate: number;
+}
+
+// Period comparison
+export interface PeriodSummary {
+	startDate: string;
+	endDate: string;
+	totalRevenue: number;
+	totalQuantity: number;
+	totalChickenCount: number;
+	totalOrders: number;
+	avgDailyRevenue: number;
+}
+
+export interface PeriodComparisonData {
+	current: PeriodSummary;
+	previous: PeriodSummary;
+	revenueChangeRate: number;
+	quantityChangeRate: number;
+	chickenChangeRate: number;
+}
+
+// Waste statistics
+export interface WasteMaterialItem {
+	materialId: number;
+	materialName: string;
+	unit: string;
+	totalWaste: number;
+	wasteCost: number;
+	count: number;
+}
+
+export interface WasteStatsData {
+	periodStart: string;
+	periodEnd: string;
+	totalWasteCount: number;
+	totalWasteCost: number;
+	byMaterial: WasteMaterialItem[];
 }
 
 // Demand forecast

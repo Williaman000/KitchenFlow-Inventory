@@ -9,6 +9,7 @@
 		"chat": "AI 챗봇",
 		"trends": "매출분석",
 		"forecast": "AI 발주추천",
+		"costWaste": "원가/폐기",
 		"materials": "재료관리",
 		"orders": "발주관리",
 		"mappings": "재료매핑"
@@ -72,6 +73,8 @@
 		"fieldCategoryPlaceholder": "예: 육류, 양념, 포장재",
 		"fieldCurrentStock": "현재 재고",
 		"fieldMinStock": "최소 재고",
+		"fieldUnitPrice": "단가 (원)",
+		"fieldExpiryDate": "유통기한",
 		"fieldLeadTime": "리드타임 (일)",
 		"fieldDeadlineHour": "발주 마감 시간",
 		"fieldDeliveryDay": "배송 요일",
@@ -211,6 +214,44 @@
 		"fileName": "파일명",
 		"totalRows": "전체 행",
 		"importedRows": "임포트 행"
+	},
+	"costAnalysis": {
+		"title": "원가 분석",
+		"loading": "원가 데이터를 불러오는 중...",
+		"productName": "상품명",
+		"price": "판매가",
+		"materialCost": "재료 원가",
+		"margin": "마진",
+		"marginRate": "마진율",
+		"avgMarginRate": "평균 마진율",
+		"materials": "재료 상세",
+		"noData": "원가 데이터가 없습니다",
+		"noCost": "재료 단가 미입력"
+	},
+	"wasteStats": {
+		"title": "폐기 통계",
+		"loading": "폐기 데이터를 불러오는 중...",
+		"totalCount": "총 폐기 건수",
+		"totalCost": "총 폐기 비용",
+		"materialName": "재료명",
+		"totalWaste": "총 폐기량",
+		"wasteCost": "폐기 비용",
+		"count": "건수",
+		"noData": "폐기 기록이 없습니다",
+		"days": "일",
+		"unitCount": "건",
+		"period": "기간"
+	},
+	"comparison": {
+		"title": "기간 비교",
+		"week": "이번주 vs 저번주",
+		"month": "이번달 vs 저번달",
+		"current": "현재 기간",
+		"previous": "이전 기간",
+		"revenueChange": "매출 변동",
+		"chickenChange": "판매량 변동",
+		"increase": "증가",
+		"decrease": "감소"
 	},
 	"forecast": {
 		"title": "AI 발주 추천",

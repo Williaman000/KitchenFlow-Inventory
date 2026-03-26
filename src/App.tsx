@@ -15,12 +15,13 @@ import ForecastPage from './components/ForecastPage/ForecastPage';
 import MaterialManager from './components/MaterialManager/MaterialManager';
 import PurchaseOrderManager from './components/PurchaseOrderManager/PurchaseOrderManager';
 import MappingManager from './components/MappingManager/MappingManager';
+import CostWasteAnalysis from './components/CostWasteAnalysis/CostWasteAnalysis';
 import ScrollButtons from './components/ScrollButtons/ScrollButtons';
 import styles from './App.module.scss';
 
-type AppTab = 'dashboard' | 'chat' | 'trends' | 'forecast' | 'materials' | 'orders' | 'mappings';
+type AppTab = 'dashboard' | 'chat' | 'trends' | 'forecast' | 'costWaste' | 'materials' | 'orders' | 'mappings';
 
-const TAB_KEYS: AppTab[] = ['dashboard', 'chat', 'trends', 'forecast', 'materials', 'orders', 'mappings'];
+const TAB_KEYS: AppTab[] = ['dashboard', 'chat', 'trends', 'forecast', 'costWaste', 'materials', 'orders', 'mappings'];
 
 const LANG_LABELS: Record<string, string> = { ko: '한국어', ja: '日本語' };
 
@@ -145,6 +146,7 @@ const App: FC = () => {
 						onCreatePO={inventoryHook.handleCreatePO}
 					/>
 				)}
+				{activeTab === 'costWaste' && <CostWasteAnalysis />}
 				{activeTab === 'materials' && (
 					<MaterialManager
 						materials={inventoryHook.materials}

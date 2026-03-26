@@ -10,6 +10,8 @@ interface MaterialDto {
 	category: string;
 	current_stock: number;
 	minimum_stock: number;
+	unit_price: number;
+	expiry_date: string | null;
 	lead_time_days: number;
 	order_deadline_hour: number;
 	delivery_day_of_week: number | null;
@@ -63,6 +65,8 @@ function toMaterial(dto: MaterialDto): Material {
 		category: dto.category,
 		currentStock: dto.current_stock,
 		minimumStock: dto.minimum_stock,
+		unitPrice: dto.unit_price ?? 0,
+		expiryDate: dto.expiry_date ?? null,
 		leadTimeDays: dto.lead_time_days ?? 1,
 		orderDeadlineHour: dto.order_deadline_hour ?? 18,
 		deliveryDayOfWeek: dto.delivery_day_of_week ?? null,
@@ -121,6 +125,8 @@ export interface CreateMaterialPayload {
 	category?: string;
 	currentStock?: number;
 	minimumStock?: number;
+	unitPrice?: number;
+	expiryDate?: string | null;
 	leadTimeDays?: number;
 	orderDeadlineHour?: number;
 	deliveryDayOfWeek?: number | null;
@@ -141,6 +147,8 @@ export async function createMaterial(payload: CreateMaterialPayload): Promise<Ma
 			category: payload.category ?? '기타',
 			current_stock: payload.currentStock ?? 0,
 			minimum_stock: payload.minimumStock ?? 0,
+			unit_price: payload.unitPrice ?? 0,
+			expiry_date: payload.expiryDate ?? null,
 			lead_time_days: payload.leadTimeDays ?? 1,
 			order_deadline_hour: payload.orderDeadlineHour ?? 18,
 			delivery_day_of_week: payload.deliveryDayOfWeek ?? null,
@@ -159,6 +167,8 @@ export async function updateMaterial(
 	if (payload.category !== undefined) body.category = payload.category;
 	if (payload.currentStock !== undefined) body.current_stock = payload.currentStock;
 	if (payload.minimumStock !== undefined) body.minimum_stock = payload.minimumStock;
+	if (payload.unitPrice !== undefined) body.unit_price = payload.unitPrice;
+	if (payload.expiryDate !== undefined) body.expiry_date = payload.expiryDate;
 	if (payload.leadTimeDays !== undefined) body.lead_time_days = payload.leadTimeDays;
 	if (payload.orderDeadlineHour !== undefined) body.order_deadline_hour = payload.orderDeadlineHour;
 	if (payload.deliveryDayOfWeek !== undefined) body.delivery_day_of_week = payload.deliveryDayOfWeek;

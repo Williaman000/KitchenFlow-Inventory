@@ -1,4 +1,4 @@
-import type { SalesTrendData, ForecastData, InsightData, ProductMaterialMapping, SalesUploadRecord, SalesUploadResult } from '../types';
+import type { SalesTrendData, ForecastData, InsightData, ProductMaterialMapping, SalesUploadRecord, SalesUploadResult, CostAnalysisData, PeriodComparisonData, WasteStatsData } from '../types';
 import { API_BASE_URL, getApiToken, request } from './api';
 
 // ── Backend DTOs (snake_case) ──
@@ -323,4 +323,66 @@ export async function fetchSalesUploads(): Promise<SalesUploadRecord[]> {
 
 export async function deleteSalesUpload(uploadId: number): Promise<void> {
 	await request<void>(`/api/v1/inventory-ai/sales-uploads/${uploadId}`, { method: 'DELETE' });
+}
+
+// ── Cost Analysis ──
+
+export async function fetchCostAnalysis(): Promise<CostAnalysisData> {
+	const dto = await request<{ products: Array<{ product_id: number; product_name: string; price: number; material_cost: number; margin: number; margin_rate: number; materials: Array<{ name: string; unit: string; qty: number; unit_price: number; cost: number }> }>; avg_margin_rate: number }>('/api/v1/inventory-ai/cost-analysis');
+	return {
+		products: dto.products.map((p) => ({
+			productId: p.product_id,
+			productName: p.product_name,
+			price: p.price,
+			materialCost: p.material_cost,
+			margin: p.margin,
+			marginRate: p.margin_rate,
+			materials: p.materials.map((m) => ({
+				name: m.name, unit: m.unit, qty: m.qty, unitPrice: m.unit_price, cost: m.cost,
+			})),
+		})),
+		avgMarginRate: dto.avg_margin_rate,
+	};
+}
+
+// ── Period Comparison ──
+
+export async function fetchPeriodComparison(period: 'week' | 'month'): Promise<PeriodComparisonData> {
+	const dto = await request<{ current: Record<string, unknown>; previous: Record<string, unknown>; revenue_change_rate: number; quantity_change_rate: number; chicken_change_rate: number }>(`/api/v1/inventory-ai/compare?period=${period}`);
+	const mapSummary = (s: Record<string, unknown>) => ({
+		startDate: s.start_date as string,
+		endDate: s.end_date as string,
+		totalRevenue: s.total_revenue as number,
+		totalQuantity: s.total_quantity as number,
+		totalChickenCount: s.total_chicken_count as number,
+		totalOrders: s.total_orders as number,
+		avgDailyRevenue: s.avg_daily_revenue as number,
+	});
+	return {
+		current: mapSummary(dto.current),
+		previous: mapSummary(dto.previous),
+		revenueChangeRate: dto.revenue_change_rate,
+		quantityChangeRate: dto.quantity_change_rate,
+		chickenChangeRate: dto.chicken_change_rate,
+	};
+}
+
+// ── Waste Statistics ──
+
+export async function fetchWasteStats(days: number = 30): Promise<WasteStatsData> {
+	const dto = await request<{ period_start: string; period_end: string; total_waste_count: number; total_waste_cost: number; by_material: Array<{ material_id: number; material_name: string; unit: string; total_waste: number; waste_cost: number; count: number }> }>(`/api/v1/inventory-ai/waste-stats?days=${days}`);
+	return {
+		periodStart: dto.period_start,
+		periodEnd: dto.period_end,
+		totalWasteCount: dto.total_waste_count,
+		totalWasteCost: dto.total_waste_cost,
+		byMaterial: dto.by_material.map((m) => ({
+			materialId: m.material_id,
+			materialName: m.material_name,
+			unit: m.unit,
+			totalWaste: m.total_waste,
+			wasteCost: m.waste_cost,
+			count: m.count,
+		})),
+	};
 }

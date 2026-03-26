@@ -1,0 +1,239 @@
+@use '../../styles/breakpoints' as *;
+
+.container {
+	padding: 24px;
+	max-width: 1000px;
+	margin: 0 auto;
+}
+
+.loading {
+	text-align: center;
+	color: #999;
+	padding: 40px;
+}
+
+.section {
+	background: #fff;
+	border-radius: 12px;
+	padding: 24px;
+	margin-bottom: 24px;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.sectionHeader {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 20px;
+	flex-wrap: wrap;
+	gap: 12px;
+}
+
+.sectionTitle {
+	font-size: 18px;
+	font-weight: 700;
+	color: #222;
+	margin: 0 0 16px;
+}
+
+.periodBtns {
+	display: flex;
+	gap: 6px;
+}
+
+.periodBtn {
+	padding: 6px 14px;
+	border: 1px solid #ddd;
+	border-radius: 20px;
+	background: #fff;
+	font-size: 12px;
+	font-weight: 600;
+	color: #555;
+	cursor: pointer;
+
+	&.active {
+		background: #1565C0;
+		color: #fff;
+		border-color: #1565C0;
+	}
+}
+
+// Comparison
+.compGrid {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	margin-bottom: 16px;
+}
+
+.compCard {
+	flex: 1;
+	background: #f8f9fa;
+	border-radius: 10px;
+	padding: 16px 20px;
+	text-align: center;
+}
+
+.compVs {
+	font-size: 20px;
+	font-weight: 900;
+	color: #999;
+}
+
+.compLabel {
+	font-size: 12px;
+	color: #999;
+	font-weight: 600;
+	margin-bottom: 4px;
+}
+
+.compPeriod {
+	font-size: 11px;
+	color: #aaa;
+	margin-bottom: 8px;
+}
+
+.compValue {
+	font-size: 22px;
+	font-weight: 700;
+	color: #222;
+}
+
+.compSub {
+	font-size: 12px;
+	color: #777;
+	margin-top: 4px;
+}
+
+.changeRow {
+	display: flex;
+	gap: 24px;
+	justify-content: center;
+}
+
+.changeItem {
+	font-size: 14px;
+	color: #555;
+}
+
+// Summary
+.summaryRow {
+	display: flex;
+	gap: 16px;
+	margin-bottom: 20px;
+}
+
+.summaryCard {
+	background: #f8f9fa;
+	border-radius: 10px;
+	padding: 16px 20px;
+	min-width: 160px;
+}
+
+.summaryLabel {
+	font-size: 12px;
+	color: #999;
+	font-weight: 600;
+	margin-bottom: 6px;
+}
+
+.summaryValue {
+	font-size: 24px;
+	font-weight: 700;
+	color: #222;
+}
+
+// Chart
+.chartWrap {
+	width: 100%;
+	height: 300px;
+	margin-bottom: 20px;
+}
+
+// Table
+.tableWrap {
+	overflow-x: auto;
+}
+
+.table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.th {
+	text-align: left;
+	padding: 10px 12px;
+	border-bottom: 2px solid #eee;
+	font-weight: 700;
+	color: #999;
+	font-size: 12px;
+}
+
+.td {
+	padding: 10px 12px;
+	border-bottom: 1px solid #eee;
+	color: #222;
+	font-size: 13px;
+}
+
+.clickableRow {
+	cursor: pointer;
+
+	&:hover {
+		background: #f5f8ff;
+	}
+}
+
+.detailCell {
+	padding: 0 12px 12px 32px;
+	background: #fafbfc;
+}
+
+.detailTable {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 12px;
+
+	th {
+		text-align: left;
+		padding: 6px 8px;
+		color: #999;
+		font-weight: 600;
+		border-bottom: 1px solid #eee;
+	}
+
+	td {
+		padding: 6px 8px;
+		color: #555;
+		border-bottom: 1px solid #f0f0f0;
+	}
+}
+
+.noCost {
+	color: #F57C00;
+	font-size: 11px;
+}
+
+.noData {
+	text-align: center;
+	color: #999;
+	padding: 24px;
+}
+
+@include tablet {
+	.container { padding: 16px; }
+	.compGrid { flex-direction: column; }
+	.compVs { display: none; }
+	.chartWrap { height: 250px; }
+}
+
+@include mobile {
+	.container { padding: 12px; }
+	.section { padding: 16px; }
+	.sectionTitle { font-size: 16px; }
+	.summaryRow { flex-direction: column; }
+	.compGrid { flex-direction: column; }
+	.compVs { display: none; }
+	.changeRow { flex-direction: column; gap: 8px; align-items: center; }
+	.chartWrap { height: 200px; }
+}

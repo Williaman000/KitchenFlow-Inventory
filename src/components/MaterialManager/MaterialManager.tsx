@@ -49,6 +49,8 @@ const MaterialManager: FC<Props> = ({
 	const [formCategory, setFormCategory] = useState('');
 	const [formCurrentStock, setFormCurrentStock] = useState('');
 	const [formMinimumStock, setFormMinimumStock] = useState('');
+	const [formUnitPrice, setFormUnitPrice] = useState('');
+	const [formExpiryDate, setFormExpiryDate] = useState('');
 	const [formLeadTimeDays, setFormLeadTimeDays] = useState('1');
 	const [formOrderDeadlineHour, setFormOrderDeadlineHour] = useState('18');
 	const [formDeliveryDayOfWeek, setFormDeliveryDayOfWeek] = useState('');
@@ -115,6 +117,8 @@ const MaterialManager: FC<Props> = ({
 		setFormCategory('');
 		setFormCurrentStock('');
 		setFormMinimumStock('');
+		setFormUnitPrice('');
+		setFormExpiryDate('');
 		setFormLeadTimeDays('1');
 		setFormOrderDeadlineHour('18');
 		setFormDeliveryDayOfWeek('');
@@ -128,6 +132,8 @@ const MaterialManager: FC<Props> = ({
 		setFormCategory(mat.category);
 		setFormCurrentStock(String(mat.currentStock));
 		setFormMinimumStock(String(mat.minimumStock));
+		setFormUnitPrice(String(mat.unitPrice || ''));
+		setFormExpiryDate(mat.expiryDate || '');
 		setFormLeadTimeDays(String(mat.leadTimeDays));
 		setFormOrderDeadlineHour(String(mat.orderDeadlineHour));
 		setFormDeliveryDayOfWeek(mat.deliveryDayOfWeek !== null ? String(mat.deliveryDayOfWeek) : '');
@@ -143,6 +149,8 @@ const MaterialManager: FC<Props> = ({
 			category: formCategory.trim() || '기타',
 			currentStock: parseFloat(formCurrentStock) || 0,
 			minimumStock: parseFloat(formMinimumStock) || 0,
+			unitPrice: parseFloat(formUnitPrice) || 0,
+			expiryDate: formExpiryDate || null,
 			leadTimeDays: parseInt(formLeadTimeDays) || 1,
 			orderDeadlineHour: parseInt(formOrderDeadlineHour) ?? 18,
 			deliveryDayOfWeek: formDeliveryDayOfWeek !== '' ? parseInt(formDeliveryDayOfWeek) : null,
@@ -370,6 +378,28 @@ const MaterialManager: FC<Props> = ({
 										value={formMinimumStock}
 										onChange={(e) => setFormMinimumStock(e.target.value)}
 										placeholder="0"
+									/>
+								</div>
+							</div>
+							<div className={styles.formRow}>
+								<div className={styles.formField} style={{ flex: 1 }}>
+									<label className={styles.formLabel}>{t('materials.fieldUnitPrice')}</label>
+									<input
+										className={styles.formInput}
+										type="number"
+										step="1"
+										value={formUnitPrice}
+										onChange={(e) => setFormUnitPrice(e.target.value)}
+										placeholder="0"
+									/>
+								</div>
+								<div className={styles.formField} style={{ flex: 1 }}>
+									<label className={styles.formLabel}>{t('materials.fieldExpiryDate')}</label>
+									<input
+										className={styles.formInput}
+										type="date"
+										value={formExpiryDate}
+										onChange={(e) => setFormExpiryDate(e.target.value)}
 									/>
 								</div>
 							</div>

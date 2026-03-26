@@ -9,6 +9,9 @@ export interface Material {
 	category: string;
 	currentStock: number;
 	minimumStock: number;
+	leadTimeDays: number;
+	orderDeadlineHour: number;
+	deliveryDayOfWeek: number | null;
 	isActive: boolean;
 	createdAt: string;
 	updatedAt: string;

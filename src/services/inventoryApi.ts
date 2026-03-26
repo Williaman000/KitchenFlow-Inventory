@@ -10,6 +10,9 @@ interface MaterialDto {
 	category: string;
 	current_stock: number;
 	minimum_stock: number;
+	lead_time_days: number;
+	order_deadline_hour: number;
+	delivery_day_of_week: number | null;
 	is_active: boolean;
 	created_at: string;
 	updated_at: string;
@@ -60,6 +63,9 @@ function toMaterial(dto: MaterialDto): Material {
 		category: dto.category,
 		currentStock: dto.current_stock,
 		minimumStock: dto.minimum_stock,
+		leadTimeDays: dto.lead_time_days ?? 1,
+		orderDeadlineHour: dto.order_deadline_hour ?? 18,
+		deliveryDayOfWeek: dto.delivery_day_of_week ?? null,
 		isActive: dto.is_active,
 		createdAt: dto.created_at,
 		updatedAt: dto.updated_at,
@@ -115,6 +121,9 @@ export interface CreateMaterialPayload {
 	category?: string;
 	currentStock?: number;
 	minimumStock?: number;
+	leadTimeDays?: number;
+	orderDeadlineHour?: number;
+	deliveryDayOfWeek?: number | null;
 }
 
 export async function fetchMaterials(category?: string): Promise<Material[]> {
@@ -132,6 +141,9 @@ export async function createMaterial(payload: CreateMaterialPayload): Promise<Ma
 			category: payload.category ?? '기타',
 			current_stock: payload.currentStock ?? 0,
 			minimum_stock: payload.minimumStock ?? 0,
+			lead_time_days: payload.leadTimeDays ?? 1,
+			order_deadline_hour: payload.orderDeadlineHour ?? 18,
+			delivery_day_of_week: payload.deliveryDayOfWeek ?? null,
 		}),
 	});
 	return toMaterial(dto);
@@ -147,6 +159,9 @@ export async function updateMaterial(
 	if (payload.category !== undefined) body.category = payload.category;
 	if (payload.currentStock !== undefined) body.current_stock = payload.currentStock;
 	if (payload.minimumStock !== undefined) body.minimum_stock = payload.minimumStock;
+	if (payload.leadTimeDays !== undefined) body.lead_time_days = payload.leadTimeDays;
+	if (payload.orderDeadlineHour !== undefined) body.order_deadline_hour = payload.orderDeadlineHour;
+	if (payload.deliveryDayOfWeek !== undefined) body.delivery_day_of_week = payload.deliveryDayOfWeek;
 	if (payload.isActive !== undefined) body.is_active = payload.isActive;
 	const dto = await request<MaterialDto>(`/api/v1/admin/inventory/materials/${id}`, {
 		method: 'PATCH',

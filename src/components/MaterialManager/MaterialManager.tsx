@@ -49,6 +49,9 @@ const MaterialManager: FC<Props> = ({
 	const [formCategory, setFormCategory] = useState('');
 	const [formCurrentStock, setFormCurrentStock] = useState('');
 	const [formMinimumStock, setFormMinimumStock] = useState('');
+	const [formLeadTimeDays, setFormLeadTimeDays] = useState('1');
+	const [formOrderDeadlineHour, setFormOrderDeadlineHour] = useState('18');
+	const [formDeliveryDayOfWeek, setFormDeliveryDayOfWeek] = useState('');
 
 	// Bulk import modal
 	const [showBulkImport, setShowBulkImport] = useState(false);
@@ -112,6 +115,9 @@ const MaterialManager: FC<Props> = ({
 		setFormCategory('');
 		setFormCurrentStock('');
 		setFormMinimumStock('');
+		setFormLeadTimeDays('1');
+		setFormOrderDeadlineHour('18');
+		setFormDeliveryDayOfWeek('');
 		setShowForm(true);
 	};
 
@@ -122,6 +128,9 @@ const MaterialManager: FC<Props> = ({
 		setFormCategory(mat.category);
 		setFormCurrentStock(String(mat.currentStock));
 		setFormMinimumStock(String(mat.minimumStock));
+		setFormLeadTimeDays(String(mat.leadTimeDays));
+		setFormOrderDeadlineHour(String(mat.orderDeadlineHour));
+		setFormDeliveryDayOfWeek(mat.deliveryDayOfWeek !== null ? String(mat.deliveryDayOfWeek) : '');
 		setShowForm(true);
 	};
 
@@ -134,6 +143,9 @@ const MaterialManager: FC<Props> = ({
 			category: formCategory.trim() || '기타',
 			currentStock: parseFloat(formCurrentStock) || 0,
 			minimumStock: parseFloat(formMinimumStock) || 0,
+			leadTimeDays: parseInt(formLeadTimeDays) || 1,
+			orderDeadlineHour: parseInt(formOrderDeadlineHour) ?? 18,
+			deliveryDayOfWeek: formDeliveryDayOfWeek !== '' ? parseInt(formDeliveryDayOfWeek) : null,
 		};
 		try {
 			if (editingMaterial) {
@@ -360,6 +372,48 @@ const MaterialManager: FC<Props> = ({
 										placeholder="0"
 									/>
 								</div>
+							</div>
+							<div className={styles.formRow}>
+								<div className={styles.formField} style={{ flex: 1 }}>
+									<label className={styles.formLabel}>{t('materials.fieldLeadTime')}</label>
+									<input
+										className={styles.formInput}
+										type="number"
+										min="1"
+										max="14"
+										value={formLeadTimeDays}
+										onChange={(e) => setFormLeadTimeDays(e.target.value)}
+									/>
+								</div>
+								<div className={styles.formField} style={{ flex: 1 }}>
+									<label className={styles.formLabel}>{t('materials.fieldDeadlineHour')}</label>
+									<select
+										className={styles.formInput}
+										value={formOrderDeadlineHour}
+										onChange={(e) => setFormOrderDeadlineHour(e.target.value)}
+									>
+										{Array.from({ length: 24 }, (_, h) => (
+											<option key={h} value={h}>{`${String(h).padStart(2, '0')}:00`}</option>
+										))}
+									</select>
+								</div>
+							</div>
+							<div className={styles.formField}>
+								<label className={styles.formLabel}>{t('materials.fieldDeliveryDay')}</label>
+								<select
+									className={styles.formInput}
+									value={formDeliveryDayOfWeek}
+									onChange={(e) => setFormDeliveryDayOfWeek(e.target.value)}
+								>
+									<option value="">{t('materials.deliveryDayNone')}</option>
+									<option value="1">{t('materials.dayMon')}</option>
+									<option value="2">{t('materials.dayTue')}</option>
+									<option value="3">{t('materials.dayWed')}</option>
+									<option value="4">{t('materials.dayThu')}</option>
+									<option value="5">{t('materials.dayFri')}</option>
+									<option value="6">{t('materials.daySat')}</option>
+									<option value="0">{t('materials.daySun')}</option>
+								</select>
 							</div>
 							<div className={styles.formActions}>
 								<button type="button" className={styles.cancelActionBtn} onClick={() => setShowForm(false)}>{t('materials.cancel')}</button>

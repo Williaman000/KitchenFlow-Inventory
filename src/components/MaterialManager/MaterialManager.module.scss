@@ -192,6 +192,13 @@
 	font-weight: 700;
 }
 
+.actionsRow {
+	display: flex;
+	gap: 6px;
+	justify-content: center;
+	white-space: nowrap;
+}
+
 .actionBtn {
 	padding: 4px 10px;
 	border: 1px solid #ddd;
@@ -201,6 +208,7 @@
 	font-weight: 600;
 	cursor: pointer;
 	color: #555;
+	white-space: nowrap;
 }
 
 .actionBtnDanger {
